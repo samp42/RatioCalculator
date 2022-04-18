@@ -3,18 +3,18 @@ from PyQt6.QtCore import Qt
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QIcon
-from mpl_canva import MplCanva
+from mpl_canvas import MplCanvas
 from physics import Physics
 import data
 
 
-def update_plot(canva, data_points):
+def update_plot(canvas, data_points):
     # data_points[][] with [[dist0, spd0, acc0, cur0], ...]
     df = pd.DataFrame(data_points, columns=['Distance', 'Speed', 'Acceleration'], index=data.kXValues)
-    distance = canva.axes.twinx()
-    speed = canva.axes.twinx()
-    acceleration = canva.axes.twinx()
-    df.plot(ax=canva.axes)
+    distance = canvas.axes.twinx()
+    speed = canvas.axes.twinx()
+    acceleration = canvas.axes.twinx()
+    df.plot(ax=canvas.axes)
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -96,7 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.robotMassInput.setText(str(data.kRobotMass))
 
         # battery voltage
-        self.batteryVoltge = data.kNominalBatteryVoltage
+        self.batteryVoltage = data.kNominalBatteryVoltage
         battery_voltage_label = QLabel()
         battery_voltage_label.setText("Battery Voltage (V)")
 
@@ -380,8 +380,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Create the maptlotlib FigureCanvas object,
         # which defines a single set of axes as self.axes
-        self.lowGearCanva = MplCanva(self, width=20, height=4, dpi=100)
-        self.highGearCanva = MplCanva(self, width=20, height=4, dpi=100)
+        self.lowGearCanva = MplCanvas(self, width=20, height=4, dpi=100)
+        self.highGearCanva = MplCanvas(self, width=20, height=4, dpi=100)
 
         self.update_ratio()
 
